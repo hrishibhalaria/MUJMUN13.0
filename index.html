@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="MUJMUN 13.0 — Break The Silence. The Greatest Model United Nations Conference in Rajasthan. Coming Soon.">
+    <title>MUJMUN 13.0 — Break The Silence</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="cinematic-container">
+
+        <!-- Layer 1: Royal Heritage Rose Background -->
+        <div id="rose-background"></div>
+
+        <!-- Layer 2: All 6 Videos (managed by JS cross-fader) -->
+        <video id="vid-orig1" muted playsinline preload="auto" class="vid-layer">
+            <source src="Screen Recording 2026-06-15 160705.mp4" type="video/mp4">
+        </video>
+        <video id="vid-orig2" muted playsinline preload="auto" class="vid-layer">
+            <source src="Untitled design.mp4" type="video/mp4">
+        </video>
+        <video id="vid-new1" muted playsinline preload="auto" class="vid-layer">
+            <source src="Screen Recording 2026-06-16 102646.mp4" type="video/mp4">
+        </video>
+        <video id="vid-new2" muted playsinline preload="auto" class="vid-layer">
+            <source src="Screen Recording 2026-06-16 102730.mp4" type="video/mp4">
+        </video>
+        <video id="vid-new3" muted playsinline preload="auto" class="vid-layer">
+            <source src="Screen Recording 2026-06-16 102832.mp4" type="video/mp4">
+        </video>
+
+        <!-- Layer 3: World Map -->
+        <canvas id="world-map-canvas"></canvas>
+
+        <!-- Layer 4: Smoke -->
+        <canvas id="smoke-canvas"></canvas>
+
+        <!-- Layer 5: Missiles -->
+        <canvas id="missile-canvas"></canvas>
+
+        <!-- Layer 6: Warm Backlight Effect -->
+        <div id="warm-backlight"></div>
+
+        <!-- Layer 7: Text (dual-slot cross-fade system) -->
+        <div id="text-layer">
+            <div id="text-a" class="text-slot">
+                <div class="scene-main"></div>
+                <div class="scene-sub"></div>
+            </div>
+            <div id="text-b" class="text-slot">
+                <div class="scene-main"></div>
+                <div class="scene-sub"></div>
+            </div>
+        </div>
+
+        <!-- Final Dark Overlay to dim the background -->
+        <div id="final-dark-overlay"></div>
+
+        <!-- Layer 8: Final Logo Reveal -->
+        <div id="logo-layer">
+            <div class="logo-top-center">
+                <img src="muj logo.png" alt="MUJ" class="logo-muj">
+                <img src="sdg logo.png" alt="SDG" class="logo-sdg">
+                <img src="litmus new logo.png" alt="LITMUS" class="logo-litmus">
+            </div>
+            <div class="logo-center">
+                <img src="mun logo.png" alt="MUJMUN" class="center-logo">
+                <p id="hashtag-text">#breakthesilence</p>
+            </div>
+        </div>
+
+        <!-- Black Screen with Spark -->
+        <div id="black-screen">
+            <div id="spark"></div>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
