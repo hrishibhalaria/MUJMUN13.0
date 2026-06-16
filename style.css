@@ -1,0 +1,424 @@
+/* ═══════════════════════════════════════════════════════════
+   MUJMUN 13.0 — BREAK THE SILENCE
+   Royal Heritage × Global Diplomacy × World in Crisis
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Reset ── */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #0D0D0D;
+    font-family: 'Cinzel', serif;
+    cursor: default;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Container ── */
+#cinematic-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    transform-origin: center center;
+}
+
+/* ═══════════════════════════════════════
+   LAYER 1: Royal Heritage Rose Background
+   ═══════════════════════════════════════ */
+#rose-background {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 1;
+    background: url('rose-bg.png') center center / cover no-repeat;
+    background-color: #710912;
+}
+
+/* ═══════════════════════════════════════
+   LAYER 2: Videos (all 6, stacked)
+   ═══════════════════════════════════════ */
+.vid-layer {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    z-index: 2;
+    opacity: 0;
+    /* Leaders visible but tinted into heritage palette */
+    filter: sepia(0.25) hue-rotate(-8deg) saturate(0.6) contrast(1.2) brightness(0.6);
+    mix-blend-mode: multiply;
+    pointer-events: none;
+    transition: opacity 2s ease;
+}
+
+/* ═══════════════════════════════════════
+   LAYERS 3-5: Canvas Layers
+   ═══════════════════════════════════════ */
+#world-map-canvas,
+#smoke-canvas,
+#missile-canvas {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+}
+
+#world-map-canvas { z-index: 3; opacity: 0; }
+#smoke-canvas     { z-index: 4; opacity: 0; }
+#missile-canvas   { z-index: 5; opacity: 0; }
+
+/* ═══════════════════════════════════════
+   LAYER 6: Warm Backlight
+   ═══════════════════════════════════════ */
+#warm-backlight {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80vw;
+    height: 60vh;
+    border-radius: 50%;
+    background: radial-gradient(
+        ellipse,
+        rgba(194, 141, 57, 0.07) 0%,
+        rgba(194, 141, 57, 0.03) 35%,
+        transparent 70%
+    );
+    z-index: 6;
+    opacity: 0;
+    transition: opacity 2.5s ease;
+    pointer-events: none;
+}
+
+/* ═══════════════════════════════════════
+   LAYER 7: Text Layer — Dual-Slot System
+   ═══════════════════════════════════════ */
+#text-layer {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 7;
+    pointer-events: none;
+}
+
+.text-slot {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: translateY(25px);
+    transition: opacity 1.8s ease, transform 1.8s ease;
+}
+
+.text-slot.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.text-slot.dissolving {
+    opacity: 0;
+    transform: translateY(-15px);
+}
+
+.scene-main {
+    font-family: 'Cinzel', serif;
+    color: #EFE5D2;
+    font-size: clamp(1.6rem, 4.5vw, 4rem);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-align: center;
+    text-transform: uppercase;
+    line-height: 1.35;
+    padding: 0 1.5rem;
+    max-width: 90vw;
+}
+
+.scene-main.big {
+    font-size: clamp(2.2rem, 7vw, 5.5rem);
+    font-weight: 900;
+    letter-spacing: 0.15em;
+}
+
+.scene-main.royal {
+    text-shadow: 0 0 40px rgba(194, 141, 57, 0.12);
+}
+
+.scene-sub {
+    font-family: 'Cinzel', serif;
+    color: rgba(239, 229, 210, 0.85);
+    font-size: clamp(0.8rem, 2.2vw, 1.6rem);
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    text-align: center;
+    text-transform: uppercase;
+    margin-top: 1.2rem;
+}
+
+#final-dark-overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.65);
+    z-index: 7;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* ═══════════════════════════════════════
+   LAYER 8: Logo Layer (Final Reveal)
+   ═══════════════════════════════════════ */
+#logo-layer {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 8;
+    opacity: 0;
+    transition: opacity 2.5s ease;
+    pointer-events: none;
+}
+
+/* Top Center — All 3 logos centered in a row */
+.logo-top-center {
+    position: absolute;
+    top: clamp(0.5rem, 1.5vh, 1.2rem);
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: clamp(1.5rem, 4vw, 3.5rem);
+    align-items: center;
+}
+
+.logo-muj {
+    height: clamp(160px, 35vh, 350px);
+    filter: drop-shadow(0 2px 15px rgba(0, 0, 0, 0.7));
+}
+
+.logo-sdg {
+    height: clamp(135px, 26vh, 270px);
+    filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.7));
+}
+
+.logo-litmus {
+    height: clamp(110px, 22vh, 220px);
+    filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.7));
+}
+
+/* Center — MUN Logo (BIG) + #breakthesilence */
+.logo-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(0.8rem, 2vh, 1.5rem);
+}
+
+.center-logo {
+    height: clamp(160px, 36vh, 380px);
+    filter: drop-shadow(0 0 25px rgba(0, 0, 0, 0.5));
+}
+
+#hashtag-text {
+    font-family: 'Cinzel', serif;
+    color: #EFE5D2;
+    font-size: clamp(1.4rem, 4vw, 3.2rem);
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-shadow: 0 0 35px rgba(194, 141, 57, 0.12);
+}
+
+/* ═══════════════════════════════════════
+   BLACK SCREEN + SPARK
+   ═══════════════════════════════════════ */
+#black-screen {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: #0D0D0D;
+    z-index: 100;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+}
+
+#spark {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: rgba(194, 141, 57, 0.9);
+    animation: sparkPulse 2.8s ease-in-out infinite;
+}
+
+#entry-prompt {
+    font-family: 'Cinzel', serif;
+    color: rgba(194, 141, 57, 0);
+    font-size: clamp(0.7rem, 1.8vw, 1rem);
+    font-weight: 400;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    animation: promptFadeIn 2s ease 1.5s forwards, promptPulse 3s ease-in-out 3.5s infinite;
+    pointer-events: none;
+}
+
+@keyframes promptFadeIn {
+    to {
+        color: rgba(194, 141, 57, 0.7);
+    }
+}
+
+@keyframes promptPulse {
+    0%, 100% {
+        opacity: 0.6;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+@keyframes sparkPulse {
+    0%, 100% {
+        opacity: 0;
+        box-shadow: none;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.5);
+        box-shadow:
+            0 0 6px  rgba(194, 141, 57, 0.8),
+            0 0 18px rgba(194, 141, 57, 0.5),
+            0 0 40px rgba(194, 141, 57, 0.25),
+            0 0 70px rgba(194, 141, 57, 0.1);
+    }
+}
+
+/* ═══════════════════════════════════════
+   SCREEN SHAKE
+   ═══════════════════════════════════════ */
+@keyframes screenShake {
+    0%, 100% { transform: translate(0, 0); }
+    10%  { transform: translate(-6px, -4px); }
+    20%  { transform: translate(5px, 6px); }
+    30%  { transform: translate(-8px, 3px); }
+    40%  { transform: translate(4px, -5px); }
+    50%  { transform: translate(-3px, 7px); }
+    60%  { transform: translate(7px, -3px); }
+    70%  { transform: translate(-5px, 4px); }
+    80%  { transform: translate(6px, -7px); }
+    90%  { transform: translate(-4px, 3px); }
+}
+
+/* ═══════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════ */
+@media (max-width: 600px) {
+    .logo-muj    { height: 55px; }
+    .logo-sdg    { height: 35px; }
+    .logo-litmus { height: 45px; }
+    .center-logo { height: 80px; }
+    .logo-top-right { gap: 0.4rem; }
+    #hashtag-text { letter-spacing: 0.1em; font-size: 1.1rem; }
+}
+
+@media (max-height: 500px) {
+    .logo-center { gap: 0.4rem; }
+    .center-logo { height: 60px; }
+}
+
+/* ═══════════════════════════════════════
+   MOBILE RESPONSIVENESS
+   (Desktop remains 100% untouched)
+   ═══════════════════════════════════════ */
+@media (max-width: 768px) {
+    /* Split Logos Layout */
+    .logo-top-center {
+        width: 100%;
+        left: 0;
+        top: 0;
+        transform: none;
+        display: block;
+    }
+    
+    .logo-muj {
+        position: absolute;
+        top: clamp(1rem, 2vh, 2rem);
+        left: clamp(1rem, 4vw, 2rem);
+        height: clamp(60px, 10vh, 80px);
+        transform: none;
+    }
+    
+    .logo-sdg {
+        position: absolute;
+        top: clamp(1rem, 2vh, 2rem);
+        right: clamp(4.5rem, 16vw, 6rem); /* Space for litmus */
+        height: clamp(40px, 7vh, 55px);
+    }
+    
+    .logo-litmus {
+        position: absolute;
+        top: clamp(1rem, 2vh, 2rem);
+        right: clamp(1rem, 4vw, 2rem);
+        height: clamp(45px, 8vh, 65px);
+    }
+    
+    /* Typography Scaling */
+    .scene-main {
+        font-size: clamp(1.8rem, 6vw, 2.5rem);
+        padding: 0 1rem;
+        width: 100%;
+        text-align: center;
+        box-sizing: border-box;
+    }
+    
+    .scene-main.royal {
+        font-size: clamp(2rem, 7vw, 2.8rem);
+    }
+    
+    .scene-main.big {
+        font-size: clamp(2.2rem, 8vw, 3rem);
+    }
+    
+    .scene-sub {
+        font-size: clamp(0.7rem, 3vw, 1rem);
+    }
+    
+    /* Final Reveal Sizing */
+    .logo-center {
+        width: 100%;
+        height: auto;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .center-logo {
+        height: clamp(100px, 20vh, 150px);
+    }
+    
+    #hashtag-text {
+        font-size: clamp(1.2rem, 5vw, 1.8rem);
+        white-space: nowrap;
+    }
+}
